@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>A cool game</title>
+		<meta charset="UTF-8">
+		<meta  author = "Harun mbaabu Mwenda" email= "mbaabuharun8@gmail.com">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<canvas id='canvas'></canvas>
+		<script>
+		    var canvas=document.getElementById("canvas");
+		    canvas.width=1000*window.innerWidth/window.innerHeight;
+		    canvas.height=1000;
+		    canvas.style.width="98vw";
+		    canvas.style.height="98vh";
+		    var ctx=canvas.getContext("2d");
+		    var points=[];
+		    var x=canvas.width/2,y=canvas.height,point;
+		    points[points.length]=new Point(canvas.width/2,0,"white",10);
+		    points[points.length-1].show()
+		    points[points.length]=new Point(canvas.width/2-canvas.height*Math.sqrt(3)/3,canvas.height,"white",10);
+		    points[points.length-1].show()
+		    points[points.length]=new Point(canvas.width/2+canvas.height*Math.sqrt(3)/3,canvas.height,"white",10);
+		    points[points.length-1].show()
+            //alert(points[0].color)
+		    function draw(){
+		        requestAnimationFrame(draw);
+		        points[0].show()
+		        points[1].show()
+		        points[2].show()
+		        for(i=0;i<50;i++){
+		        switch(Math.floor(Math.random()*3)){
+		            case 0:
+		                x=getMidCoord(points[0].x,x);
+		                y=getMidCoord(points[0].y,y);
+		            break;
+		            case 1:
+		                x=getMidCoord(points[1].x,x);
+		                y=getMidCoord(points[1].y,y);
+		            break;
+		            case 2:
+		                x=getMidCoord(points[2].x,x);
+		                y=getMidCoord(points[2].y,y);
+		            break;
+		        }
+
+		        point=new Point(x,y);
+		        point.show()
+		        }
+		    }
+		    draw()
+		    function Point(x,y,color,size){
+		        this.x=x;
+		        this.y=y;
+		        this.color=color || "hsla("+360*Math.atan((this.y-canvas.height/2)/(this.x-canvas.width/2))+",100%,"+(0.1*Math.sqrt(Math.pow(this.y-canvas.height/2,2)+Math.pow(this.x-canvas.width/2,2))>50 ? 50 : 0.1*Math.sqrt(Math.pow(this.y-canvas.height/2,2)+Math.pow(this.x-canvas.width/2,2)))+"%,1)";
+		        this.size=size || 0.5;
+		        this.show=function(){
+		            ctx.fillStyle=this.color;
+		            ctx.beginPath()
+		            ctx.arc(this.x,this.y,this.size,0,2*Math.PI);
+		            ctx.closePath()
+		            ctx.fill()
+		        }
+		        
+		    }
+		    function getMidCoord(self,other){
+		            return (self+other)/2;
+		        }
+		</script>
+		<style>
+		    body{
+		        margin:0;
+		        display:block;
+		    }
+		    canvas{
+		        background-color:#0f0f0f;
+		    }
+		</style>
+	</body>
+</html>
